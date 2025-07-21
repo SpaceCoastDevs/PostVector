@@ -6,6 +6,16 @@ This is a community project to learn system design using Angular, Firebase, and 
 
 Read more about the [architecture and plan](ARCHITECTURE_AND_PLAN.md).
 
+## Setup to Run
+
+You will need to [create a Facebook application](https://developers.facebook.com/docs/development/create-an-app/) if you want to run this on your own. Once you have your Facebook application id and secret, you will need to create a `.env` file with the following settings:
+
+```env
+FACEBOOK_APP_ID=1234567890
+FACEBOOK_APP_SECRET=1234567890abcdef1234567890abcdef
+FACEBOOK_CALLBACK_URL=http://localhost:4200/api/auth/facebook/callback
+```
+
 ## Development server
 
 To start a local development server, run:
