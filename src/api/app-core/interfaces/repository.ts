@@ -1,4 +1,4 @@
-import { AppResult } from "../results/app-result";
+import { AppResult, GetRecordResult } from "../results/app-result";
 import { StoreEntityCommand } from "../requests/store-entity-command";
 import { IEntity } from "./entity";
 
@@ -8,5 +8,5 @@ export interface IRepository<T extends IEntity> {
     update(item: T): Promise<AppResult>;
     delete(id: string): Promise<boolean>;
     recordExists(id: string): Promise<boolean>;
-    getById(id: string): Promise<T | null>;
+    getRecordById(id: string): Promise<GetRecordResult<T>>;
 }
