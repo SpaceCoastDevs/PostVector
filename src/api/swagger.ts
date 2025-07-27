@@ -1,6 +1,19 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
 import { Express } from 'express';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Setup __dirname polyfill for CommonJS compatibility
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Make __dirname available globally for swagger-ui-express
+if (typeof globalThis.__dirname === 'undefined') {
+  globalThis.__dirname = __dirname;
+}
+if (typeof globalThis.__filename === 'undefined') {
+  globalThis.__filename = __filename;
+}
 
 const options: swaggerJsdoc.Options = {
   definition: {
@@ -31,8 +44,11 @@ const options: swaggerJsdoc.Options = {
 
 const specs = swaggerJsdoc(options);
 
-export function setupSwagger(app: Express): void {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
+export async function setupSwagger(app: Express): Promise<void> {
+  // Dynamic import of swagger-ui-express to avoid SSR issues
+  const swaggerUi = await import('swagger-ui-express');
+  
+  app.use('/api-docs', swaggerUi.default.serve, swaggerUi.default.setup(specs, {
     explorer: true,
     customSiteTitle: 'PostVector API Documentation',
     customfavIcon: '/public/favicon.ico',
