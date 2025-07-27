@@ -50,6 +50,18 @@ const angularApp = new AngularNodeAppEngine();
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Add MIME type middleware for better static file serving
+app.use((req, res, next) => {
+  if (req.path.endsWith('.css')) {
+    res.setHeader('Content-Type', 'text/css');
+  } else if (req.path.endsWith('.js')) {
+    res.setHeader('Content-Type', 'application/javascript');
+  } else if (req.path.endsWith('.json')) {
+    res.setHeader('Content-Type', 'application/json');
+  }
+  next();
+});
+
 // Setup OpenAPI/Swagger documentation
 setupSwagger(app).catch(console.error);
 
@@ -80,6 +92,13 @@ app.use(
     maxAge: '1y',
     index: false,
     redirect: false,
+    setHeaders: (res, path) => {
+      if (path.endsWith('.css')) {
+        res.setHeader('Content-Type', 'text/css');
+      } else if (path.endsWith('.js')) {
+        res.setHeader('Content-Type', 'application/javascript');
+      }
+    },
   }),
 );
 

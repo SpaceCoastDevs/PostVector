@@ -1,13 +1,11 @@
-import swaggerJsdoc from 'swagger-jsdoc';
-import { Express } from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { Application } from 'express';
 
-// Setup __dirname polyfill for CommonJS compatibility
+// Polyfill __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Make __dirname available globally for swagger-ui-express
 if (typeof globalThis.__dirname === 'undefined') {
   globalThis.__dirname = __dirname;
 }
@@ -15,59 +13,72 @@ if (typeof globalThis.__filename === 'undefined') {
   globalThis.__filename = __filename;
 }
 
-const options: swaggerJsdoc.Options = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'PostVector API',
-      version: '1.0.0',
-      description: 'API for PostVector social media management platform',
-    },
-    servers: [
-      {
-        url: 'http://localhost:4000',
-        description: 'Development server',
-      },
-    ],
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
+export async function setupSwagger(app: Application): Promise<void> {
+  try {
+    // Dynamic import to avoid SSR issues
+    const swaggerUi = await import('swagger-ui-express');
+    const swaggerJsdoc = await import('swagger-jsdoc');
+
+    const options = {
+      definition: {
+        openapi: '3.0.0',
+        info: {
+          title: 'PostVector API',
+          version: '1.0.0',
+          description: 'API documentation for PostVector application',
+        },
+        servers: [
+          {
+            url: '/api',
+            description: 'Development server',
+          },
+        ],
+        components: {
+          securitySchemes: {
+            bearerAuth: {
+              type: 'http',
+              scheme: 'bearer',
+              bearerFormat: 'JWT',
+            },
+          },
         },
       },
-    },
-  },
-  apis: ['./src/api/*.ts'], // Path to the API files
-};
+      apis: ['./src/api/**/*.ts'], // paths to files containing OpenAPI definitions
+    };
 
-const specs = swaggerJsdoc(options);
+    const specs = swaggerJsdoc.default(options);
+    
+    // Custom CSS to fix potential styling issues
+    const customCss = `
+      .swagger-ui .topbar { display: none }
+      .swagger-ui .info { margin: 50px 0 }
+    `;
 
-export async function setupSwagger(app: Express): Promise<void> {
-  // Dynamic import of swagger-ui-express to avoid SSR issues
-  const swaggerUi = await import('swagger-ui-express');
-  
-  app.use('/api-docs', swaggerUi.default.serve, swaggerUi.default.setup(specs, {
-    explorer: true,
-    customSiteTitle: 'PostVector API Documentation',
-    customfavIcon: '/public/favicon.ico',
-    customCss: `
-      .topbar-wrapper .link {
-        content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27,6.96 12,12.01 20.73,6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>');
-        height: 40px;
-        width: auto;
-      }
-    `,
-  }));
+    // Swagger UI options with proper configuration for development
+    const swaggerUiOptions = {
+      customCss,
+      customSiteTitle: 'PostVector API Documentation',
+      swaggerOptions: {
+        docExpansion: 'none',
+        filter: true,
+        showRequestHeaders: true,
+      },
+    };
 
-  // Serve OpenAPI JSON spec
-  app.get('/api-docs.json', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(specs);
-  });
+    // Serve swagger docs JSON
+    app.get('/api-docs.json', (req, res) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(specs);
+    });
 
-  console.log('📚 API Documentation available at: http://localhost:4000/api-docs');
+    // Setup Swagger UI with proper static file handling
+    app.use('/api-docs', swaggerUi.default.serve);
+    app.get('/api-docs', swaggerUi.default.setup(specs, swaggerUiOptions));
+
+    console.log('✅ Swagger documentation setup complete');
+    console.log('📖 API docs available at: /api-docs');
+    console.log('📄 API spec available at: /api-docs.json');
+  } catch (error) {
+    console.error('❌ Failed to setup Swagger documentation:', error);
+  }
 }
-
-export { specs };
