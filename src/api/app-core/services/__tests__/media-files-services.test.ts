@@ -12,6 +12,7 @@ const mockRepository: jest.Mocked<IRepository<MediaFile>> = {
   delete: jest.fn(),
   recordExists: jest.fn(),
   getRecordById: jest.fn(),
+  validate: jest.fn(),
 };
 
 describe('MediaFileServices', () => {
