@@ -8,12 +8,20 @@ import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import api from "./api/index";
+import { setupSwagger } from "./api/swagger";
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+
+// Middleware for parsing JSON and URL-encoded data
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Setup OpenAPI/Swagger documentation
+setupSwagger(app);
 
 /**
  * Example Express Rest API endpoints can be defined here.

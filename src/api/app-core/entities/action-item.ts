@@ -23,7 +23,7 @@ export class ActionItem implements IEntity {
     priority: number;
     createdBy: string;
     createdAt: Date;
-    updatedBy: string = '';
+    updatedBy: string;
     updatedAt: Date | undefined;
 
     constructor(
@@ -32,16 +32,20 @@ export class ActionItem implements IEntity {
         description: string,
         owner: string,
         priority: number,
-        createdBy: string,        
-        createdAt?: Date,        
+        createdBy: string,
+        updatedBy?: string,
+        createdAt?: Date,
+        updatedAt?: Date
     ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.owner = owner;
         this.priority = priority;
-        this.createdBy = createdBy;        
-        this.createdAt = createdAt || new Date();        
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy || '';
+        this.createdAt = createdAt || new Date();
+        this.updatedAt = updatedAt;
     }
 
     /**
@@ -54,12 +58,12 @@ export class ActionItem implements IEntity {
             data.description,
             data.owner,
             data.priority,
-            data.createdBy,            
-            data.createdAt,            
+            data.createdBy,
+            data.updatedBy,
+            data.createdAt,
+            data.updatedAt
         );
-    }
-
-    /**
+    }    /**
      * Validates the action item data using the Zod schema
      */
     static validate(data: unknown): { success: true; data: ActionItemData } | { success: false; errors: string[] } {
@@ -92,6 +96,26 @@ export class ActionItem implements IEntity {
         };
     }
 
+    /**
+     * Creates a new action item with updated fields
+     */
+    update(updates: Partial<Pick<ActionItem, 'name' | 'description' | 'owner' | 'priority'>>, updatedBy: string): ActionItem {
+        return new ActionItem(
+            this.id,
+            updates.name ?? this.name,
+            updates.description ?? this.description,
+            updates.owner ?? this.owner,
+            updates.priority ?? this.priority,
+            this.createdBy,
+            updatedBy,
+            this.createdAt,
+            new Date()
+        );
+    }
+
+    /**
+     * Gets a human-readable priority description
+     */
     getPriorityDescription(): string {
         switch (this.priority) {
             case 1: return 'Very Low';
