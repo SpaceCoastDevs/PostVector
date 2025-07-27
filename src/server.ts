@@ -105,7 +105,6 @@ app.use(
 /**
  * Handle all other requests by rendering the Angular application.
  */
-
 app.use('/**', (req, res, next) => {
   console.log(`[SSR CATCH-ALL] ${req.method} ${req.originalUrl}`);
   angularApp
