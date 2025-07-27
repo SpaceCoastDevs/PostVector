@@ -124,6 +124,9 @@ const actionItemService = new ActionItemServices(repository);
  */
 router.post('/', async (req: Request, res: Response) => {
     try {
+
+        console.log('Storing action item:', req.body);
+
         const command = new StoreEntityCommand<ActionItem>(req.body.entity, req.body.userId);
         const { result, actionItem } = await actionItemService.storeActionItem(command);
 
