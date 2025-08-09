@@ -1,5 +1,6 @@
 import postRoute from "./post";
 import facebookAuthRoute from "./auth/facebook";
+import actionItemsRoute from "./action-items";
 import type { Request, Response, NextFunction } from "express";
 
 
@@ -13,6 +14,7 @@ const api = express.Router();
 
 api.use("/post", postRoute);
 api.use("/auth/facebook", facebookAuthRoute);
+api.use("/action-items", actionItemsRoute);
 
 // Base route
 api.get("/", (req: Request, res: Response) => res.send(`Hello from API! ${req.url.toString()}`));

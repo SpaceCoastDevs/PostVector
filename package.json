@@ -7,6 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:api": "jest",
+    "test:api:watch": "jest --watch",
+    "test:api:coverage": "jest --coverage",
     "serve:ssr:post-vector": "node dist/post-vector/server/server.mjs"
   },
   "private": true,
@@ -22,6 +25,9 @@
     "@angular/ssr": "^20.0.0",
     "@tailwindcss/postcss": "^4.1.8",
     "@types/express-session": "^1.18.1",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "@types/uuid": "^10.0.0",
     "express": "^4.18.2",
     "express-session": "^1.18.1",
     "firebase-admin": "^12.6.0",
@@ -30,8 +36,12 @@
     "passport-facebook": "^3.0.0",
     "postcss": "^8.5.4",
     "rxjs": "~7.8.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "tailwindcss": "^4.1.8",
     "tslib": "^2.3.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.25.76",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
@@ -40,6 +50,7 @@
     "@angular/compiler-cli": "^20.0.0",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
+    "@types/jest": "^30.0.0",
     "@types/node": "^18.18.0",
     "@types/passport": "^1.0.17",
     "@types/passport-facebook": "^3.0.3",
@@ -50,6 +61,8 @@
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.25.4",
     "firebase-tools": "^14.2.1",
+    "jest": "^30.0.5",
+    "ts-jest": "^29.4.0",
     "typescript": "^5.8.3",
     "vite-plugin-node-polyfills": "^0.23.0"
   }
