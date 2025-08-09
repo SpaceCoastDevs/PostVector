@@ -42,51 +42,59 @@ import { Component } from '@angular/core';
         </div>
 
         <!-- Quick Actions Grid -->
-        <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-8">
+        <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-8 items-stretch">
           <!-- Create New Post -->
-          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow ">
-            <div class="w-12 h-12 bg-gradient-to-r from-[#1364C2] to-[#17BE98] rounded-lg flex items-center justify-center mb-4">
-              <span class="text-white text-xl">✍️</span>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow flex flex-col h-full">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mr-3">
+                <span class="text-white text-xl">✍️</span>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900">Create Post</h3>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Create Post</h3>
             <p class="text-gray-600 text-sm mb-4">Craft and schedule your next social media post</p>
-            <button class="w-full bg-gradient-to-r from-[#1364C2] to-[#17BE98] text-white font-medium py-2 px-4 rounded-lg hover:opacity-90 transition-opacity cursor-pointer">
+            <button class="mt-auto w-full bg-gradient-to-r from-[#1364C2] to-[#17BE98] text-white font-medium py-2 px-4 rounded-lg hover:opacity-90 transition-opacity cursor-pointer">
               Get Started
             </button>
           </div>
 
           <!-- Schedule Posts -->
-          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-            <div class="w-12 h-12 bg-gradient-to-r from-[#1364C2] to-[#17BE98] rounded-lg flex items-center justify-center mb-4">
-              <span class="text-white text-xl">📅</span>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow flex flex-col h-full">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mr-3">
+                <span class="text-white text-xl">📅</span>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900">Schedule</h3>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Schedule</h3>
             <p class="text-gray-600 text-sm mb-4">View and manage your posting calendar</p>
-            <button class="w-full bg-white border-2 border-[#1364C2] text-[#1364C2] font-medium py-2 px-4 rounded-lg hover:bg-[#1364C2] hover:text-white transition-colors cursor-pointer">
+            <button class="mt-auto w-full bg-white border-2 border-[#1364C2] text-[#1364C2] font-medium py-2 px-4 rounded-lg hover:bg-[#1364C2] hover:text-white transition-colors cursor-pointer">
               View Calendar
             </button>
           </div>
 
           <!-- Analytics -->
-          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-            <div class="w-12 h-12 bg-gradient-to-r from-[#1364C2] to-[#17BE98] rounded-lg flex items-center justify-center mb-4">
-              <span class="text-white text-xl">📊</span>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow flex flex-col h-full">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mr-3">
+                <span class="text-white text-xl">📊</span>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900">Analytics</h3>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Analytics</h3>
             <p class="text-gray-600 text-sm mb-4">Track your social media performance</p>
-            <button class="w-full bg-white border-2 border-[#1364C2] text-[#1364C2] font-medium py-2 px-4 rounded-lg hover:bg-[#1364C2] hover:text-white transition-colors cursor-pointer">
+            <button class="mt-auto w-full bg-white border-2 border-[#1364C2] text-[#1364C2] font-medium py-2 px-4 rounded-lg hover:bg-[#1364C2] hover:text-white transition-colors cursor-pointer">
               View Stats
             </button>
           </div>
 
           <!-- Content Library -->
-          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-            <div class="w-12 h-12 bg-gradient-to-r from-[#1364C2] to-[#17BE98] rounded-lg flex items-center justify-center mb-4">
-              <span class="text-white text-xl">📁</span>
+          <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow flex flex-col h-full">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mr-3">
+                <span class="text-white text-xl">📁</span>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900">Content</h3>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Content</h3>
             <p class="text-gray-600 text-sm mb-4">Manage templates and media assets</p>
-            <button class="w-full bg-white border-2 border-[#1364C2] text-[#1364C2] font-medium py-2 px-4 rounded-lg hover:bg-[#1364C2] hover:text-white transition-colors cursor-pointer">
+            <button class="mt-auto w-full bg-white border-2 border-[#1364C2] text-[#1364C2] font-medium py-2 px-4 rounded-lg hover:bg-[#1364C2] hover:text-white transition-colors cursor-pointer">
               Browse Library
             </button>
           </div>
