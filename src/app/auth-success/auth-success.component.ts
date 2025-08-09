@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-auth-success',
-  imports: [],
+  imports: [RouterLink],
   template: `
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
       <!-- Header Section -->
@@ -87,9 +88,9 @@ import { Component } from '@angular/core';
               Your Facebook account is now connected and ready for posting. You can manage your connection in settings.
             </p>
             <div class="flex flex-col sm:flex-row gap-3 justify-center">
-              <button class="flex-1 bg-gradient-to-r from-[#1364C2] to-[#17BE98] text-white font-medium py-2 px-4 rounded-lg hover:opacity-90 transition-opacity">
+              <a [routerLink]="['/dashboard']" class="btn flex-1 bg-gradient-to-r from-[#1364C2] to-[#17BE98] text-white font-medium py-2 px-4 rounded-lg hover:opacity-90 transition-opacity cursor-pointer">
                 View Dashboard
-              </button>
+              </a>
               <button class="flex-1 bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors">
                 Test Connection
               </button>
@@ -113,5 +114,5 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class AuthSuccessComponent {
-
+  constructor() { }
 }
